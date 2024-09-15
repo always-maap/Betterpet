@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useTokenCodeMutation } from "@/hooks/auth/mutation/useTokenCodeMutation";
-import { useValidateEmailMutation } from "@/hooks/auth/mutation/useValidateEmailMutation";
+import { signIn } from "@/apis/internal";
 
 type Inputs = {
   email: string;
@@ -14,20 +13,14 @@ type Inputs = {
 
 function SignInPage() {
   const { register, handleSubmit } = useForm<Inputs>();
-  const [validateEmailMutation] = useValidateEmailMutation();
-  const [tokenCodeMutation] = useTokenCodeMutation();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const email = data.email;
-    validateEmailMutation({
-      variables: { input: { email } },
-      onCompleted: ({ validateEmail: { valid } }) => {
-        console.log(valid);
-        tokenCodeMutation({ variables: { input: { email } } });
-        navigate(`/auth/verify?email=${encodeURIComponent(email)}`);
-      },
-    });
+    const password = data.password;
+
+    const d = await signIn(email, password);
+    console.log(d);
   };
 
   return (
@@ -41,10 +34,17 @@ function SignInPage() {
           <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="me@example.com" required {...register("email")} />
+              <Input
+                id="email"
+                type="email"
+                placeholder="me@example.com"
+                autoComplete="username"
+                required
+                {...register("email")}
+              />
 
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" required {...register("password")} />
+              <Input id="password" type="password" autoComplete="current-password" required {...register("password")} />
             </div>
 
             <Button type="submit" className="w-full">

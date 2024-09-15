@@ -1,4 +1,5 @@
-export const BASE_URL = "https://api.bettermode.com/";
-export const BASE_URL_GLOBAL = "https://api.bettermode.com/global/";
+export const BETTERMODE_BASEURL = "https://api.bettermode.com";
 
-export const BETTERCAT_BASEURL = "https://basic-ecsfviis.bettermode.io/api/";
+export const BETTERCAT_BASEURL = "https://betterpet.bettermode.io/api";
+
+export const SPACE_ID = "KN5xnEEr00fs";

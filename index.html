@@ -4,10 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>Betterpet</title>
   </head>
-  <body class="flex h-screen">
-    <div id="root" class="w-full"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="flex h-screen dark:bg-zinc-900">
+    <div id="app" class="w-full"><!--ssr-outlet--></div>
+    <script>
+      window[__BM_DATA__] = {};
+    </script>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>

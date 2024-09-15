@@ -1,9 +1,6 @@
 {
   "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -14,18 +11,8 @@
     "plugins": [
       {
         "name": "gql.tada/ts-plugin",
-        "schemas": [
-          {
-            "name": "bettermode",
-            "schema": "https://api.bettermode.com/",
-            "tadaOutputLocation": "./src/types/bettermode-env.d.ts"
-          },
-          {
-            "name": "bettermode-global",
-            "schema": "https://api.bettermode.com/global",
-            "tadaOutputLocation": "./src/types/bettermode-global-env.d.ts"
-          }
-        ]
+        "schema": "https://api.bettermode.com/",
+        "tadaOutputLocation": "./src/types/bettermode-env.d.ts"
       }
     ]
   }

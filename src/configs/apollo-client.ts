@@ -1,19 +1,15 @@
-import { ApolloClient, ApolloLink, InMemoryCache, createHttpLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import { BASE_URL, BASE_URL_GLOBAL } from "../apis/constants";
+import { BETTERMODE_BASEURL } from "../apis/constants";
 
 const httpLink = createHttpLink({
-  uri: BASE_URL,
-});
-
-const globalHttpLink = createHttpLink({
-  uri: BASE_URL_GLOBAL,
+  uri: BETTERMODE_BASEURL,
 });
 
 const authLink = setContext((_, { headers }) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkUyWHVRRG9lSmllTSIsImVtYWlsIjoibW9oYW1tYWRhbGkuYXAuMjAwMEBnbWFpbC5jb20iLCJpYXQiOjE3MjU2NzA5MzIsImV4cCI6MTcyODA5MDEzMn0.uQVR978j0T9v35lg5kEWc6S-Pu1MB3iPjZMjJ7cSY9M";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlcyMktWVGpweDciLCJuZXR3b3JrSWQiOiI3S05hckFlVWVvIiwibmV0d29ya0RvbWFpbiI6ImJldHRlcnBldC5iZXR0ZXJtb2RlLmlvIiwidG9rZW5UeXBlIjoiVVNFUiIsImVudGl0eUlkIjpudWxsLCJwZXJtaXNzaW9uQ29udGV4dCI6bnVsbCwicGVybWlzc2lvbnMiOm51bGwsInNlc3Npb25JZCI6Ijc0bkxybmROVDVEd3Ewd2M2UE5NY0J2Wk1mOEI4RmUwM09Sc21Qd2MySHZxZDdrdDRaIiwiaWF0IjoxNzI2Mjg4NjQ0LCJleHAiOjE3Mjg4ODA2NDR9.B2rqWSdP8594LfCNC_lZ7UJNKqYIk8qzvXFjdp9wG0w";
 
   return {
     headers: {
@@ -24,10 +20,18 @@ const authLink = setContext((_, { headers }) => {
 });
 
 export const apolloClient = new ApolloClient({
-  link: ApolloLink.split(
-    (operation) => operation.getContext().apiName === "global",
-    globalHttpLink,
-    authLink.concat(httpLink)
-  ),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
+});
+
+declare global {
+  interface Window {
+    __BM_DATA__: any;
+  }
+}
+
+export const apolloClientServer = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache().restore(globalThis.window?.__BM_DATA__),
+  ssrMode: true,
 });
