@@ -5,8 +5,21 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Betterpet</title>
+    <style>
+      /*injected-styles*/
+    </style>
+    <script>
+      const preferedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      const currentTheme = localStorage.getItem("bp-theme");
+
+      if (!currentTheme) {
+        localStorage.setItem("bp-theme", preferedTheme);
+      }
+
+      document.documentElement.classList.add(currentTheme);
+    </script>
   </head>
-  <body class="flex h-screen dark:bg-zinc-900">
+  <body class="flex h-screen bg-background text-foreground">
     <div id="app" class="w-full"><!--ssr-outlet--></div>
     <script>
       window[__BM_DATA__] = {};

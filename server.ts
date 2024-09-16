@@ -81,9 +81,9 @@ export async function createServer(
         render = (await import("./dist/server/entry-server.tsx")).render;
       }
 
-      const appHtml = await render(url);
+      const { appHtml, styles } = await render(url);
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(`/*injected-styles*/`, styles);
 
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {

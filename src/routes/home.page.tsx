@@ -1,8 +1,10 @@
-import PostCard from "@/components/posts/PostCard";
+import { PostCard } from "@/components/posts/PostCard";
 import { usePostsInfiniteQuery } from "@/hooks/posts/usePostsInfiniteQuery";
 import { invariant } from "@apollo/client/utilities/globals";
 
-function HomePage() {
+import { ModeToggle } from "@/components/layout/mode-toggle";
+
+export function HomePage() {
   // const { data, loading, error } = usePostsInfiniteQuery();
 
   // if (loading) return "Loading...";
@@ -12,6 +14,7 @@ function HomePage() {
 
   return (
     <main>
+      <ModeToggle />
       <ul className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {/* <PostCard title={data.posts.title} description={data.posts.description} slug={data.posts.slug} /> */}
         <PostCard
@@ -24,5 +27,3 @@ In this video, Jacob will walk you through how to manage notifications at the co
     </main>
   );
 }
-
-export default HomePage;

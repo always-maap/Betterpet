@@ -3,8 +3,9 @@ import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { ApolloProvider } from "@apollo/client";
 import { renderToStringWithData } from "@apollo/client/react/ssr";
 
-import { apolloClientServer } from "./configs/apollo-client";
-import { Router } from "./configs/router";
+import { apolloClientServer } from "@/configs/apollo-client";
+import { Router } from "@/configs/router";
+import styles from "./index.css";
 
 export async function render(url: string) {
   const context = apolloClientServer.extract();
@@ -15,7 +16,7 @@ export async function render(url: string) {
     loadErrorMessages();
   }
 
-  const x = await renderToStringWithData(
+  const appHtml = await renderToStringWithData(
     <ApolloProvider client={apolloClientServer}>
       <StaticRouter location={url}>
         <Router />
@@ -23,5 +24,5 @@ export async function render(url: string) {
     </ApolloProvider>
   );
 
-  return x;
+  return { appHtml, styles };
 }

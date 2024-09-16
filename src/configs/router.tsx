@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
-import HomePage from "@/routes/home.page";
-import SignInPage from "@/routes/auth/sign-in.page";
+import { HomePage } from "@/routes/home.page";
+import { SignInPage } from "@/routes/auth/sign-in.page";
 
 export function Router() {
   return (

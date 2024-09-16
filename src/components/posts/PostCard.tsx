@@ -4,7 +4,7 @@ type Props = {
   slug: string;
 };
 
-function PostCard(props: Props) {
+export function PostCard(props: Props) {
   const { title, description, slug } = props;
 
   return (
@@ -27,5 +27,3 @@ function PostCard(props: Props) {
     </div>
   );
 }
-
-export default PostCard;

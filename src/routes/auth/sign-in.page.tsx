@@ -11,7 +11,7 @@ type Inputs = {
   password: string;
 };
 
-function SignInPage() {
+export function SignInPage() {
   const { register, handleSubmit } = useForm<Inputs>();
   const navigate = useNavigate();
 
@@ -68,5 +68,3 @@ function SignInPage() {
     </div>
   );
 }
-
-export default SignInPage;
