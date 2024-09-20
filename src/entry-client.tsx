@@ -3,8 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { apolloClient } from "@/configs/apollo-client";
+import { apolloClient } from "@/configs/apollo.client";
 import { Router } from "@/configs/router";
+import { Toaster } from "@/components/ui/sonner";
 
 ReactDOM.hydrateRoot(
   document.getElementById("app")!,
@@ -12,6 +13,7 @@ ReactDOM.hydrateRoot(
     <BrowserRouter>
       <ThemeProvider defaultTheme="light" storageKey="bp-theme">
         <Router />
+        <Toaster />
       </ThemeProvider>
     </BrowserRouter>
   </ApolloProvider>

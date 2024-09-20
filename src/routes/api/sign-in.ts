@@ -1,15 +1,13 @@
-import { Router } from "express";
 import cookie from "cookie";
 import invariant from "tiny-invariant";
 
-import { signIn } from "@/apis/auth";
+import { login } from "@/apis/auth";
+import { Request, Response } from "server";
 
-export const authRouter = Router();
-
-authRouter.post("/sign-in", async (req, res) => {
+export async function GET(req: Request, res: Response) {
   const { email, password } = req.body;
 
-  const signInResp = await signIn(email, password);
+  const signInResp = await login(email, password);
 
   invariant(signInResp.ok, "Failed to sign in");
 
@@ -18,5 +16,5 @@ authRouter.post("/sign-in", async (req, res) => {
 
   const token = cookie.parse(setCookie).c_access_token;
 
-  return res.json({ email, password, token });
-});
+  return res.json({ email, password, token }).send();
+}

@@ -1,6 +1,7 @@
 import { BETTERCAT_BASEURL } from "./constants";
+import { graphql } from "../configs/graphql";
 
-export async function signIn(email: string, password: string) {
+export async function login(email: string, password: string) {
   return await fetch(`${BETTERCAT_BASEURL}/auth/login`, {
     method: "POST",
     headers: {
@@ -14,3 +15,7 @@ export async function signIn(email: string, password: string) {
     }),
   });
 }
+
+// export const LoginNetowrkMutation = graphql`
+
+// `;

@@ -3,12 +3,12 @@ import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { ApolloProvider } from "@apollo/client";
 import { renderToStringWithData } from "@apollo/client/react/ssr";
 
-import { apolloClientServer } from "@/configs/apollo-client";
+import { apolloClientServer } from "@/configs/apollo.server";
 import { Router } from "@/configs/router";
 import styles from "./index.css";
 
 export async function render(url: string) {
-  const context = apolloClientServer.extract();
+  const ssrContext = apolloClientServer.extract();
 
   if (import.meta.env.DEV) {
     // Adds messages only in a dev environment
@@ -24,5 +24,5 @@ export async function render(url: string) {
     </ApolloProvider>
   );
 
-  return { appHtml, styles };
+  return { appHtml, styles, ssrContext };
 }

@@ -63,3 +63,8 @@
     @apply border-border;
   }
 }
+
+.prose {
+  color: var(--text-foreground);
+  max-width: initial;
+}

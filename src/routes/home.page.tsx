@@ -1,27 +1,21 @@
-import { PostCard } from "@/components/posts/PostCard";
-import { usePostsInfiniteQuery } from "@/hooks/posts/usePostsInfiniteQuery";
-import { invariant } from "@apollo/client/utilities/globals";
-
-import { ModeToggle } from "@/components/layout/mode-toggle";
+import { PostCard } from "@/components/posts/post-card";
+import { usePostsInfiniteQuery } from "@/hooks/post/usePostsInfiniteQuery";
 import { Container } from "@/components/ui/container";
 import { Banner } from "@/components/home/banner";
 import { Button } from "@/components/ui/button";
+import { Header } from "@/components/layout/header";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function HomePage() {
-  // const { data, loading, error } = usePostsInfiniteQuery();
+  const { data, fetchMore, loading } = usePostsInfiniteQuery();
 
-  // if (loading) return "Loading...";
-  // if (error) return `Error! ${error.message}`;
-
-  // invariant(data, "Data should be available at this point");
+  if (loading && data === undefined) {
+    return <HomePageSkeleton />;
+  }
 
   return (
     <>
-      <header className="bg-muted py-2">
-        <Container>
-          <ModeToggle />
-        </Container>
-      </header>
+      <Header />
 
       <main className="py-4">
         <Container>
@@ -29,22 +23,44 @@ export function HomePage() {
 
           <div className="mt-3">
             <ul className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {/* <PostCard title={data.posts.title} description={data.posts.description} slug={data.posts.slug} /> */}
-              {Array.from({ length: 6 }).map((_, index) => (
+              {data?.posts.nodes?.map((post) => (
                 <PostCard
-                  key={index}
-                  title="Notifications"
-                  description="Learn the basic fundamentals of getting started with Bettermode!
-In this video, Jacob will walk you through how to manage notifications at the community level and the space level."
-                  slug="/"
+                  key={post.id}
+                  id={post.id}
+                  title={post.title!}
+                  description={post.description!}
+                  thumbnail={post.thumbnail as any}
                 />
               ))}
             </ul>
           </div>
+          {data?.posts.pageInfo.hasNextPage && (
+            <Button variant="outline" className="w-full my-4" onClick={() => fetchMore(data.posts.pageInfo.endCursor!)}>
+              Show more
+            </Button>
+          )}
+        </Container>
+      </main>
+    </>
+  );
+}
 
-          <Button variant="outline" className="w-full my-4">
-            Show more
-          </Button>
+function HomePageSkeleton() {
+  return (
+    <>
+      <Header />
+
+      <main className="py-4">
+        <Container>
+          <Banner />
+
+          <div className="mt-3">
+            <ul className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3, 4, 5, 6].map((index) => (
+                <Skeleton key={index} className="h-80" />
+              ))}
+            </ul>
+          </div>
         </Container>
       </main>
     </>

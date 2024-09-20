@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { signIn } from "@/apis/internal";
+import { signIn } from "@/apis/sign-in";
 
 type Inputs = {
   email: string;
